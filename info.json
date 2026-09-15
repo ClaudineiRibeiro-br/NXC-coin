@@ -1,0 +1,10 @@
+{
+    "name": "NXC",
+    "website": "https://nomatrixchain.tech",
+    "description": "NXC is the native coin of the NOMATRIX Chain, an EVM-compatible Proof of Authority blockchain built to power the NOMATRIX ONE augmented reality platform.",
+    "symbol": "NXC",
+    "type": "ERC20",
+    "decimals": 18,
+    "status": "active",
+    "id": "0xEd509C207E1F653b35f89cb8b8cd70aA6bf04ABE"
+}
