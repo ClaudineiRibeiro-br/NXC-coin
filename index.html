@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOMATRIX Chain — NXC</title>
+  <meta name="description" content="NOMATRIX Chain is a private PoA blockchain built for the NOMATRIX ONE augmented reality platform. Native coin: NXC." />
+  <link rel="icon" href="nxc-logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:       #C9A84C;
+      --gold-light: #E8C96A;
+      --gold-dim:   #7A6230;
+      --void:       #07080A;
+      --surface:    #0E1014;
+      --surface2:   #161A20;
+      --border:     #1E2330;
+      --text:       #D4D8E0;
+      --text-dim:   #6B7280;
+      --white:      #F0F2F5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--void);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 60px;
+      background: rgba(7,8,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-brand img { width: 28px; height: 28px; }
+
+    .nav-brand span {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+
+    section { position: relative; z-index: 1; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+    }
+
+    .hero-logo {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 32px;
+      filter: drop-shadow(0 0 24px rgba(201,168,76,0.4));
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { filter: drop-shadow(0 0 24px rgba(201,168,76,0.4)); }
+      50%       { filter: drop-shadow(0 0 40px rgba(201,168,76,0.7)); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--gold-dim);
+      letter-spacing: 0.18em;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--text-dim);
+      max-width: 480px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--void);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 13px 26px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--gold);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 12px 26px;
+      border: 1px solid var(--gold-dim);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    .hero-chain-id {
+      margin-top: 52px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+    }
+
+    .chain-dot {
+      width: 8px; height: 8px;
+      background: #22C55E;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22C55E;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    .chain-id-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .chain-id-text strong {
+      color: var(--gold);
+      margin-left: 6px;
+    }
+
+    .stats {
+      padding: 0 24px 80px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .stat-item {
+      background: var(--surface);
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 40px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .net-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .net-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .net-table tr:last-child { border-bottom: none; }
+
+    .net-table td {
+      padding: 14px 0;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    .net-table td:first-child {
+      color: var(--text-dim);
+      width: 200px;
+      font-size: 13px;
+    }
+
+    .net-table td:last-child {
+      font-family: 'Space Mono', monospace;
+      color: var(--text);
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .copy-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .copy-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 11px;
+      padding: 3px 10px;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .copy-btn:hover { color: var(--gold); border-color: var(--gold-dim); }
+    .copy-btn.copied { color: #22C55E; border-color: #22C55E; }
+
+    .metamask-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+
+    .metamask-box p {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    .metamask-steps {
+      list-style: none;
+      counter-reset: steps;
+      margin-bottom: 28px;
+    }
+
+    .metamask-steps li {
+      counter-increment: steps;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 14px;
+      color: var(--text);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .metamask-steps li:last-child { border-bottom: none; }
+
+    .metamask-steps li::before {
+      content: counter(steps);
+      min-width: 24px;
+      height: 24px;
+      background: var(--gold-dim);
+      color: var(--void);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .roadmap-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .roadmap-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .roadmap-item:last-child { border-bottom: none; }
+
+    .roadmap-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .roadmap-item.done { color: var(--text-dim); }
+    .roadmap-item.done .roadmap-icon { color: #22C55E; }
+    .roadmap-item.pending .roadmap-icon { color: var(--gold-dim); }
+    .roadmap-item.pending { color: var(--text); }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .net-table td:first-child { width: 120px; }
+      .metamask-box { padding: 20px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="#">
+      <img src="logo.svg" alt="NXC" />
+      <span>NOMATRIX CHAIN</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#network">Network</a></li>
+      <li><a href="#connect">Connect</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="https://github.com/ClaudineiRibeiro-br/NXC-coin" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <img class="hero-logo" src="logo.svg" alt="NXC Logo" />
+    <p class="hero-eyebrow">Blockchain Infrastructure</p>
+    <h1>The chain behind<br/><em>NOMATRIX ONE</em></h1>
+    <p class="hero-sub">
+      A private Ethereum-compatible PoA blockchain built to power
+      location-based augmented reality on the NOMATRIX ONE platform.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="addToMetaMask()">
+        🦊 Add to MetaMask
+      </button>
+      <a class="btn-secondary" href="#network">View network details</a>
+    </div>
+    <div class="hero-chain-id">
+      <span class="chain-dot"></span>
+      <span class="chain-id-text">Chain ID <strong>19840</strong> · PoA/Clique · Block ~5s</span>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-value">19840</span>
+        <span class="stat-label">Chain ID</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">~5s</span>
+        <span class="stat-label">Block time</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">1B</span>
+        <span class="stat-label">NXC total supply</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-value">PoA</span>
+        <span class="stat-label">Consensus</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="network" style="background: var(--surface);">
+    <div class="section-inner">
+      <h2 class="section-title">Network details</h2>
+      <table class="net-table">
+        <tr>
+          <td>Network name</td>
+          <td>NOMATRIX Chain</td>
+        </tr>
+        <tr>
+          <td>Chain ID</td>
+          <td>
+            <div class="copy-row">
+              19840
+              <button class="copy-btn" onclick="copyText('19840', this)">Copy</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>RPC URL</td>
+          <td>
+            <div class="copy-row">
+              http://75.119.142.94:8545
+              <button class="copy-btn" onclick="copyText('http://75.119.142.94:8545', this)">Copy</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>WebSocket</td>
+          <td>ws://75.119.142.94:8546</td>
+        </tr>
+        <tr>
+          <td>Currency symbol</td>
+          <td>NXC</td>
+        </tr>
+        <tr>
+          <td>Decimals</td>
+          <td>18 &nbsp;<span style="color:var(--text-dim);font-size:12px;">(smallest unit: nix)</span></td>
+        </tr>
+        <tr>
+          <td>Client</td>
+          <td>Geth v1.13.14</td>
+        </tr>
+        <tr>
+          <td>Block explorer</td>
+          <td style="color:var(--text-dim);">Coming soon</td>
+        </tr>
+      </table>
+
+      <h2 class="section-title" style="margin-top:56px;">NXC token (ERC-20)</h2>
+      <table class="net-table">
+        <tr>
+          <td>Contract</td>
+          <td>
+            <div class="copy-row">
+              0xEd509C207E1F653b35f89cb8b8cd70aA6bf04ABE
+              <button class="copy-btn" onclick="copyText('0xEd509C207E1F653b35f89cb8b8cd70aA6bf04ABE', this)">Copy</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Token name</td>
+          <td>NXC</td>
+        </tr>
+        <tr>
+          <td>Symbol</td>
+          <td>NXC</td>
+        </tr>
+        <tr>
+          <td>Total supply</td>
+          <td>1,000,000,000 NXC</td>
+        </tr>
+        <tr>
+          <td>Standard</td>
+          <td>ERC-20</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="connect">
+    <div class="section-inner">
+      <h2 class="section-title">Connect your wallet</h2>
+      <div class="metamask-box">
+        <p>Add NOMATRIX Chain to MetaMask in one click, or follow the manual steps below.</p>
+        <button class="btn-primary" style="margin-bottom:32px;" onclick="addToMetaMask()">
+          🦊 Add NOMATRIX Chain to MetaMask
+        </button>
+        <p style="color:var(--text-dim);font-size:13px;margin-bottom:16px;">Manual setup:</p>
+        <ol class="metamask-steps">
+          <li>Open MetaMask → Settings → Networks → Add Network</li>
+          <li>Enter <strong>Network Name:</strong> NOMATRIX Chain</li>
+          <li>Enter <strong>RPC URL:</strong> http://75.119.142.94:8545</li>
+          <li>Enter <strong>Chain ID:</strong> 19840</li>
+          <li>Enter <strong>Symbol:</strong> NXC</li>
+          <li>Click Save — you're connected ✅</li>
+        </ol>
+        <p style="color:var(--text-dim);font-size:13px;margin-bottom:12px;margin-top:24px;">To import the NXC token:</p>
+        <ol class="metamask-steps">
+          <li>Go to Assets → Import tokens</li>
+          <li>Paste contract: <code style="color:var(--gold);font-size:12px;">0xEd509C207E1F653b35f89cb8b8cd70aA6bf04ABE</code></li>
+          <li>Symbol and decimals fill automatically → Import tokens ✅</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap" style="background: var(--surface);">
+    <div class="section-inner">
+      <h2 class="section-title">Roadmap</h2>
+      <ul class="roadmap-list">
+        <li class="roadmap-item done">
+          <span class="roadmap-icon">✓</span>
+          NOMATRIX Chain deployed (Geth PoA/Clique, Chain ID 19840)
+        </li>
+        <li class="roadmap-item done">
+          <span class="roadmap-icon">✓</span>
+          NXC ERC-20 contract deployed (1,000,000,000 NXC)
+        </li>
+        <li class="roadmap-item done">
+          <span class="roadmap-icon">✓</span>
+          NXC logo created and published
+        </li>
+        <li class="roadmap-item done">
+          <span class="roadmap-icon">✓</span>
+          systemd auto-start configured (node resilience on VPS reboot)
+        </li>
+        <li class="roadmap-item done">
+          <span class="roadmap-icon">✓</span>
+          PR #8705 aberto no ethereum-lists/chains (aguardando aprovação)
+        </li>
+        <li class="roadmap-item pending">
+          <span class="roadmap-icon">○</span>
+          Subdomain rpc.nomatrixchain.tech (DNS ativo, aguarda nginx)
+        </li>
+        <li class="roadmap-item pending">
+          <span class="roadmap-icon">○</span>
+          Block explorer deployment
+        </li>
+        <li class="roadmap-item pending">
+          <span class="roadmap-icon">○</span>
+          Register NXC logo on TrustWallet Assets
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built by <strong style="color:var(--gold);">Claudinei Ribeiro</strong> · Brazil 🇧🇷 · NOMATRIX ONE</p>
+    <div class="footer-links">
+      <a href="https://nomatrixchain.tech" target="_blank">nomatrixchain.tech</a>
+      <a href="https://github.com/ClaudineiRibeiro-br/NXC-coin" target="_blank">GitHub</a>
+      <a href="https://github.com/ClaudineiRibeiro-br/deploy-usdtz" target="_blank">USDT.z</a>
+    </div>
+  </footer>
+
+  <script>
+    async function addToMetaMask() {
+      if (typeof window.ethereum === 'undefined') {
+        alert('MetaMask not detected. Please install MetaMask first.');
+        return;
+      }
+      try {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: '0x4D80',
+            chainName: 'NOMATRIX Chain',
+            nativeCurrency: { name: 'NXC', symbol: 'NXC', decimals: 18 },
+            rpcUrls: ['http://75.119.142.94:8545'],
+            blockExplorerUrls: null
+          }]
+        });
+      } catch (err) {
+        console.error(err);
+        alert('Could not add network automatically. Please add it manually.');
+      }
+    }
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
