@@ -1,0 +1,22 @@
+{
+  "name": "NOMATRIX Token List",
+  "logoURI": "https://claudineiribeiro-br.github.io/NXC-coin/logo.svg",
+  "keywords": ["nomatrix", "nxc", "bsc"],
+  "timestamp": "2026-09-23T00:00:00+00:00",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "tokens": [
+    {
+      "chainId": 56,
+      "address": "0x40786158C9fD0f4ED5032f0aa61168fCCb131Db4",
+      "name": "NX Coin",
+      "symbol": "NXC",
+      "decimals": 18,
+      "logoURI": "https://claudineiribeiro-br.github.io/NXC-coin/logo.svg",
+      "tags": ["nomatrix"]
+    }
+  ]
+}
